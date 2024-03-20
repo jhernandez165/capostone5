@@ -1,0 +1,3 @@
+2024-03-16 20:16:08,798 - root - WARNING - invalid or no amount specified, defaulting to 10
+2024-03-16 20:16:08,798 - root - ERROR - Invalid or no object type to generate given
+2024-03-16 20:16:08,799 - root - ERROR - usage: generate.py <num> <type> <admin username> <admin password>

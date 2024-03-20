@@ -11,14 +11,14 @@ import aline_datagen
 
 
 def init_logger():
-    '''initializes a logger and returns it'''
     if not Path('logs').exists():
-        makedirs('logs')
+        Path('logs').mkdir()
     timestring = datetime.now().strftime("%Y_%m_%d_%H%M%S_%f")
+    log_filename = Path(sys.argv[0]).name.replace('.py', '')  # Removes .py extension
+    log_path = Path('logs') / f"{log_filename}-_-{timestring}.log"
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
-    handler=logging.FileHandler(f'logs/{sys.argv[0]}-_-{timestring}.log')
-    handler.setLevel(logging.INFO)
+    handler = logging.FileHandler(log_path)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
@@ -36,8 +36,6 @@ def applications(num, logger, token):
         app_type = randint(0,1)
         if app_type:
             application = aline_datagen.generate_account_application(*applicants)
-        else:
-            application = aline_datagen.generate_credit_card_application(*applicants)
         resp = aline_datagen.submit_application(application, token)
         status = resp.status_code
         try:

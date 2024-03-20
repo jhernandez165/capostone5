@@ -35,12 +35,12 @@ const Index = () => {
                     recentActions.map((act, index) => (
                         <Link className='btn btn-outline-dark rounded-circle mb-2'
                               to={{
-                                  pathname: act.link,
+                                  pathname: act?.link,
                                   state: act?.state
                               }}
                               key={index}
                         >
-                            <FontAwesomeIcon icon={act.icon}/>
+                            <FontAwesomeIcon icon={act?.icon}/>
                         </Link>
                     ))
                 }
