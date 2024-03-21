@@ -1,15 +1,14 @@
 abstract class BaseApiService {
+  private readonly api: string;
 
-    private readonly api: string;
+  protected constructor() {
+    this.api = "http://localhost:8080/api";
+  }
 
-    protected constructor() {
-        this.api = process.env.REACT_APP_API!;
-    }
-
-    protected getApi(endpoint: string) {
-        return `${this.api}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
-    }
-
+  protected getApi(endpoint: string) {
+    console.log("ENDPOINT", endpoint, this.api);
+    return `${this.api}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+  }
 }
 
 export default BaseApiService;
