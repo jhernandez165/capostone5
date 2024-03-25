@@ -5,6 +5,8 @@ services:
     image: direstbounty/capstone2:user-microservice
     ports:
       - "8070:8070"
+    networks:
+      - aline-network
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -15,10 +17,13 @@ services:
       JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8070
 
+
   underwriter-microservice:
     image: direstbounty/capstone2:underwriter-microservice
     ports:
       - "8071:8071"
+    networks:
+      - aline-network  
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -28,11 +33,14 @@ services:
       ENCRYPT_SECRET_KEY: your_encrypt_secret_key
       JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8071
+      
 
   account-microservice:
     image: direstbounty/capstone2:account-microservice
     ports:
       - "8072:8072"
+    networks:
+      - aline-network
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -42,11 +50,12 @@ services:
       ENCRYPT_SECRET_KEY: your_encrypt_secret_key
       JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8072
-
   transaction-microservice:
     image: direstbounty/capstone2:transaction-microservice
     ports:
       - "8073:8073"
+    networks:
+      - aline-network
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -61,6 +70,8 @@ services:
     image: direstbounty/capstone2:bank-microservice
     ports:
       - "8083:8083"
+    networks:
+      - aline-network
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -72,9 +83,12 @@ services:
       APP_PORT: 8083
 
   aline-gateway:
-    image: direstbounty/capstone2:aline-gateway
+    image: aline-gateway
+    container_name: aline-gateway
     ports:
       - "8080:8080"
+    networks:
+      - aline-network
     environment:
       DB_USERNAME: root
       DB_PASSWORD: 12345678
@@ -84,23 +98,38 @@ services:
       ENCRYPT_SECRET_KEY: your_encrypt_secret_key
       JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8080
+    #add ip here  host: ""
+
   admin-portal:
-    image: direstbounty/capstone2:admin-portal  # Replace with your actual image
+    image: admin-portal  # Replace with your actual image
     ports:
-      - "3000:80"  # Adjust if your admin portal runs on a different port
+      - "3000:3000"  # Adjust if your admin portal runs on a different port
+    networks:
+      - aline-network
     environment:
       API_URL: http://localhost:8080  # Adjust based on the actual API URL
+      REACT_APP_API_BASEURL: http://localhost:8080/
+      REACT_APP_TOKEN_NAME: aline_admin_token
+      REACT_APP_BROKER_URL: ws://localhost:3000
 
   landing-page:
     image: direstbounty/capstone2:landing-page  # Replace with your actual image
     ports:
-      - "4200:80"  # Adjust if your landing page runs on a different port
+      - "3007:3000"  # Adjust if your landing page runs on a different port
+    networks:
+      - aline-network
     environment:
-      API_URL: http://localhost:8080  # Adjust based on the actual API URL
+      API_URL: http://aline-gateway:8080  # Adjust based on the actual API URL
 
   member-dashboard:
-    image: direstbounty/capstone2:member-dashboard  # Replace with your actual image
+    image: member-dashboard  # Replace with your actual image
     ports:
-      - "3007:80"  # Adjust if your dashboard runs on a different port
+      - "4200:4200"  # Adjust if your dashboard runs on a different port
+    networks:
+      - aline-network
     environment:
-      API_URL: http://localhost:8080  
+      API_URL: http://aline-gateway:8080
+      HOST: 0.0.0.0
+    command: npm start --host=0.0.0.0 --port=4200   
+networks:
+  aline-network:

@@ -12,7 +12,7 @@ spring:
 
 app:
   gateway:
-    service-host: "http://localhost"
+    service-host: "http://${host}"
     path-prefix: "/api"
     routes:
       - id: "user"
@@ -56,6 +56,9 @@ app:
           - "@/members/{segment}/transactions"
           - "@/accounts/{segment}/transactions"
     portal-origins:
-      - "${PORTAL_LANDING}"
-      - "${PORTAL_DASHBOARD}"
-      - "${PORTAL_ADMIN}"
+      - http://${host}:3001/
+      - http://${host}:4200/
+      - http://${host}:3000/
+      #- "${PORTAL_LANDING}"
+      #- "${PORTAL_DASHBOARD}"
+      #- "${PORTAL_ADMIN}"
