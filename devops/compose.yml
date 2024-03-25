@@ -1,69 +1,106 @@
-version: "3.8"
-
-x-common-env-variables: &common-env-variables
-  ENCRYPT_SECRET_KEY: "${ENCRYPT_SECRET_KEY}"
-  JWT_SECRET_KEY: "${JWT_SECRET_KEY}"
-  DB_USERNAME: "${DB_USERNAME}"
-  DB_PASSWORD: "${DB_PASSWORD}"
-  DB_HOST: "${DB_HOST}"
-  DB_PORT: ${DB_PORT}
-  DB_NAME: "${DB_NAME}"
+version: '3.8'
 
 services:
-  accounts:
-    container_name: aline-accounts
-    image: direstbounty/capstone2:accounts-latest
+  user-microservice:
+    image: direstbounty/capstone2:user-microservice
     ports:
       - "8070:8070"
-    networks:
-      - aline-network
     environment:
-      <<: *common-env-variables
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  # Use host.docker.internal for local db access
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8070
 
-  banks:
-    container_name: aline-banks
-    image: direstbounty/capstone2:banks-latest
+  underwriter-microservice:
+    image: direstbounty/capstone2:underwriter-microservice
     ports:
       - "8071:8071"
-    networks:
-      - aline-network
     environment:
-      <<: *common-env-variables
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  # Use host.docker.internal for local db access
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8071
 
-  transactions:
-    container_name: aline-transactions
-    image: direstbounty/capstone2:transactions-latest
+  account-microservice:
+    image: direstbounty/capstone2:account-microservice
+    ports:
+      - "8072:8072"
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  # Use host.docker.internal for local db access
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
+      APP_PORT: 8072
+
+  transaction-microservice:
+    image: direstbounty/capstone2:transaction-microservice
     ports:
       - "8073:8073"
-    networks:
-      - aline-network
     environment:
-      <<: *common-env-variables
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  # Use host.docker.internal for local db access
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
       APP_PORT: 8073
 
-  underwriter:
-    container_name: aline-underwriter
-    image: direstbounty/capstone2:underwriter-latest
+  bank-microservice:
+    image: direstbounty/capstone2:bank-microservice
     ports:
-      - "8074:8074"
-    networks:
-      - aline-network
+      - "8083:8083"
     environment:
-      <<: *common-env-variables
-      APP_PORT: 8074
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  # Use host.docker.internal for local db access
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
+      APP_PORT: 8083
 
-  users:
-    container_name: aline-users
-    image: direstbounty/capstone2:users-latest
+  aline-gateway:
+    image: direstbounty/capstone2:aline-gateway
     ports:
-      - "8075:8075"
-    networks:
-      - aline-network
+      - "8080:8080"
     environment:
-      <<: *common-env-variables
-      APP_PORT: 8075
+      DB_USERNAME: root
+      DB_PASSWORD: 12345678
+      DB_HOST: host.docker.internal  
+      DB_PORT: 3306
+      DB_NAME: aline
+      ENCRYPT_SECRET_KEY: your_encrypt_secret_key
+      JWT_SECRET_KEY: 8RbnJKvEnaBqUtKP/oBZfSkxMni7O/R65EhPJCGDEVI=
+      APP_PORT: 8080
+  admin-portal:
+    image: direstbounty/capstone2:admin-portal  # Replace with your actual image
+    ports:
+      - "3000:80"  # Adjust if your admin portal runs on a different port
+    environment:
+      API_URL: http://localhost:8080  # Adjust based on the actual API URL
 
-networks:
-  aline-network:
+  landing-page:
+    image: direstbounty/capstone2:landing-page  # Replace with your actual image
+    ports:
+      - "4200:80"  # Adjust if your landing page runs on a different port
+    environment:
+      API_URL: http://localhost:8080  # Adjust based on the actual API URL
+
+  member-dashboard:
+    image: direstbounty/capstone2:member-dashboard  # Replace with your actual image
+    ports:
+      - "3007:80"  # Adjust if your dashboard runs on a different port
+    environment:
+      API_URL: http://localhost:8080  

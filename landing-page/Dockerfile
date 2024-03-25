@@ -1,34 +1,18 @@
-# Stage 1: Build the application
-FROM node:14.21.3-bullseye AS build-stage
+# Use an official Node runtime as a parent image
+FROM node:14
 
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of your app's source code from your host to your image filesystem.
+# Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Build the app
-RUN npm run build
+# Install any needed packages specified in package.json
+RUN npm install
+RUN npm rebuild node-sass
 
-# Stage 2: Serve the app with Nginx
-FROM nginx:stable-bullseye
-
-# Remove the default Nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copy the nginx configuration file
-COPY /nginx/nginx.conf /etc/nginx/conf.d
-
-# Copy the build output to replace the default nginx contents.
-COPY --from=build-stage /app/build /usr/share/nginx/html
-
-# Expose port 3000
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
 
-# Start Nginx when the container has provisioned.
-CMD ["nginx", "-g", "daemon off;"]
+# Run npm start when the container launches
+CMD ["npm", "start"]

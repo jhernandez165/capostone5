@@ -1,0 +1,12 @@
+com\aline\cardmicroservice\CardMicroserviceApplication.class
+com\aline\cardmicroservice\service\CardEmailService.class
+com\aline\cardmicroservice\config\CardMicroserviceConfig.class
+com\aline\cardmicroservice\service\CardIssuerService.class
+com\aline\cardmicroservice\repository\CardRepository.class
+com\aline\cardmicroservice\service\CardService.class
+com\aline\cardmicroservice\repository\CardIssuerRepository.class
+com\aline\cardmicroservice\repository\IssuerIdentificationNumberRepository.class
+com\aline\cardmicroservice\controller\RootController.class
+com\aline\cardmicroservice\config\WebSecurityConfig.class
+com\aline\cardmicroservice\authorization\CardAuthorizer.class
+com\aline\cardmicroservice\controller\CardController.class

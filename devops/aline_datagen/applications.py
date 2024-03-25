@@ -1,7 +1,9 @@
 '''generates and submits randomly generated applications to the application'''
 import os
+import requests
 from random import randint
-from .util import send_post
+from util import send_post
+
 #from .users import generate_member_user, create_user
 
 def generate_account_application(*applicants):
@@ -46,9 +48,20 @@ def generate_loan_application(account_num, applicants):
 
 
 def submit_application(application, token=''):
-    '''sends a post request to the service to submit a created application'''
-    try:
-        port = os.environ['SVC_PORT']
-    except KeyError:
-        port = '80'
-    return send_post('/applications', port, application, {"Authorization": token})
+    """Sends a post request to the service to submit a created application."""
+    # Retrieve the port from environment variables, default to '80' if not set
+    port = os.getenv('SVC_PORT', '80')
+
+    # Assuming 'APP_HOST' is your environment variable for the host address
+    host = os.getenv('APP_HOST', 'localhost')
+
+    # Construct the headers with the provided token, if any
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+
+    # Send the post request using the 'send_post' function from your utilities
+    response = send_post(f'http://{host}:{port}/applications', application, headers)
+
+    # Return the response object
+    return response
+
+

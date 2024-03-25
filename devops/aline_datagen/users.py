@@ -2,7 +2,7 @@
 import os
 from random import randint
 from faker import Faker
-from .util import random_phone, send_post
+from util import random_phone, send_post
 
 def generate_admin_user():
     '''generates and return an object representing a valid admin user to be created'''

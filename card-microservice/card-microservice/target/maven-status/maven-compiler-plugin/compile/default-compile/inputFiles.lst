@@ -1,0 +1,12 @@
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\controller\CardController.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\service\CardEmailService.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\authorization\CardAuthorizer.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\config\CardMicroserviceConfig.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\config\WebSecurityConfig.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\repository\CardRepository.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\service\CardService.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\controller\RootController.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\repository\CardIssuerRepository.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\repository\IssuerIdentificationNumberRepository.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\CardMicroserviceApplication.java
+C:\Users\jewni\AlineFinancial\card-microservice\card-microservice\src\main\java\com\aline\cardmicroservice\service\CardIssuerService.java
